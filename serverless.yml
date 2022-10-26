@@ -1,0 +1,36 @@
+service: cw-logs-upload
+
+frameworkVersion: '3'
+
+custom:
+  version: v1
+  stage: ${sls:stage}
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-south-1
+  profile: personal
+
+  environment:
+    stage: ${self:custom.stage}
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:FilterLogEvents
+          Resource:
+            - 'arn:aws:logs:eu-south-1:745049313685:log-group:/aws/lambda/cw-logs-upload-dev-cwLogsWorker:*'
+
+package:
+  patterns:
+    - '!.git/**'
+    - '!node_modules/**'
+
+functions:
+  cwLogsWorker:
+    handler: ./src/workers/cw_logs_worker.handler
+    events:
+      - schedule: rate(1 day)

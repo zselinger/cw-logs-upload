@@ -1,0 +1,22 @@
+{
+  "name": "cw-logs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zselinger/cw-logs-upload.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zselinger/cw-logs-upload/issues"
+  },
+  "homepage": "https://github.com/zselinger/cw-logs-upload#readme",
+  "devDependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.197.0"
+  }
+}
