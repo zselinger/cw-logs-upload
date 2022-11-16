@@ -17,6 +17,8 @@ provider:
 
   iam:
     role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AmazonElasticFileSystemClientFullAccess
       statements:
         - Effect: Allow
           Action:
@@ -34,3 +36,27 @@ functions:
     handler: ./src/workers/cw_logs_worker.handler
     events:
       - schedule: rate(1 day)
+  fileWrite:
+    handler: ./src/workers/file_write_worker.handler
+    fileSystemConfig:
+      localMountPath: /mnt/efs
+      arn: arn:aws:elasticfilesystem:eu-south-1:745049313685:access-point/fsap-09549535844ec4b2a
+    vpc:
+      securityGroupIds:
+        - sg-cf39e3a4
+      subnetIds:
+        - subnet-5b14f732
+        - subnet-6c181514
+        - subnet-fd99b5b7
+  fileRead:
+    handler: ./src/workers/file_read_worker.handler
+    fileSystemConfig:
+      localMountPath: /mnt/efs
+      arn: arn:aws:elasticfilesystem:eu-south-1:745049313685:access-point/fsap-09549535844ec4b2a
+    vpc:
+      securityGroupIds:
+        - sg-cf39e3a4
+      subnetIds:
+        - subnet-5b14f732
+        - subnet-6c181514
+        - subnet-fd99b5b7
