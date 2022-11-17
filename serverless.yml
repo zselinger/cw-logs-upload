@@ -5,8 +5,12 @@ frameworkVersion: '3'
 custom:
   version: v1
   stage: ${sls:stage}
-  localMountPath: /mnt/efs
+  local_mount_path: /mnt/efs
   efs_access_point_arn: ${ssm:/cwlogs/efs/efs_access_point_arn}
+  security_group: ${ssm:/cwlogs/vpc/security_group_name}
+  subnet_id1: ${ssm:/cwlogs/vpc/subnet_id1}
+  subnet_id2: ${ssm:/cwlogs/vpc/subnet_id2}
+  subnet_id3: ${ssm:/cwlogs/vpc/subnet_id3}
 
 provider:
   name: aws
@@ -43,24 +47,24 @@ functions:
   fileWrite:
     handler: ./src/workers/file_write_worker.handler
     fileSystemConfig:
-      localMountPath: ${self:custom.localMountPath}
+      localMountPath: ${self:custom.local_mount_path}
       arn: ${self:custom.efs_access_point_arn}
     vpc:
       securityGroupIds:
-        - sg-cf39e3a4
+        - ${self:custom.security_group}
       subnetIds:
-        - subnet-5b14f732
-        - subnet-6c181514
-        - subnet-fd99b5b7
+        - ${self:custom.subnet_id1}
+        - ${self:custom.subnet_id2}
+        - ${self:custom.subnet_id3}
   fileRead:
     handler: ./src/workers/file_read_worker.handler
     fileSystemConfig:
-      localMountPath: ${self:custom.localMountPath}
+      localMountPath: ${self:custom.local_mount_path}
       arn: ${self:custom.efs_access_point_arn}
     vpc:
       securityGroupIds:
-        - sg-cf39e3a4
+        - ${self:custom.security_group}
       subnetIds:
-        - subnet-5b14f732
-        - subnet-6c181514
-        - subnet-fd99b5b7
+        - ${self:custom.subnet_id1}
+        - ${self:custom.subnet_id2}
+        - ${self:custom.subnet_id3}
