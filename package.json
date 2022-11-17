@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "sls deploy --param=\"efs_access_point_arn=$(terraform output -raw efs_access_point_arn)\""
   },
   "repository": {
     "type": "git",

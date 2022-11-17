@@ -5,6 +5,7 @@ frameworkVersion: '3'
 custom:
   version: v1
   stage: ${sls:stage}
+  localMountPath: /mnt/efs
 
 provider:
   name: aws
@@ -30,6 +31,8 @@ package:
   patterns:
     - '!.git/**'
     - '!node_modules/**'
+    - '!.terraform/**'
+    - '!*.tf'
 
 functions:
   cwLogsWorker:
@@ -39,8 +42,8 @@ functions:
   fileWrite:
     handler: ./src/workers/file_write_worker.handler
     fileSystemConfig:
-      localMountPath: /mnt/efs
-      arn: arn:aws:elasticfilesystem:eu-south-1:745049313685:access-point/fsap-09549535844ec4b2a
+      localMountPath: ${self:custom.localMountPath}
+      arn: ${param:efs_access_point_arn}
     vpc:
       securityGroupIds:
         - sg-cf39e3a4
@@ -51,8 +54,8 @@ functions:
   fileRead:
     handler: ./src/workers/file_read_worker.handler
     fileSystemConfig:
-      localMountPath: /mnt/efs
-      arn: arn:aws:elasticfilesystem:eu-south-1:745049313685:access-point/fsap-09549535844ec4b2a
+      localMountPath: ${self:custom.localMountPath}
+      arn: ${param:efs_access_point_arn}
     vpc:
       securityGroupIds:
         - sg-cf39e3a4
