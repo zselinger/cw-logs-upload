@@ -44,20 +44,6 @@ functions:
     handler: ./src/workers/cw_logs_worker.handler
     events:
       - schedule: rate(1 day)
-  fileWrite:
-    handler: ./src/workers/file_write_worker.handler
-    fileSystemConfig:
-      localMountPath: ${self:custom.local_mount_path}
-      arn: ${self:custom.efs_access_point_arn}
-    vpc:
-      securityGroupIds:
-        - ${self:custom.security_group}
-      subnetIds:
-        - ${self:custom.subnet_id1}
-        - ${self:custom.subnet_id2}
-        - ${self:custom.subnet_id3}
-  fileRead:
-    handler: ./src/workers/file_read_worker.handler
     fileSystemConfig:
       localMountPath: ${self:custom.local_mount_path}
       arn: ${self:custom.efs_access_point_arn}
