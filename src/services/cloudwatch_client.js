@@ -9,7 +9,7 @@ class CloudWatch {
     this.cw = new CloudWatchClient({ region: 'eu-south-1' });
   }
 
-  async getMetrics() {
+  async getMetrics(MetricName) {
     const command = new GetMetricDataCommand({
       StartTime: new Date('2022-04-01'),
       EndTime: new Date(),
@@ -19,7 +19,7 @@ class CloudWatch {
           MetricStat: {
             Metric: {
               Namespace: 'AWS/Lambda',
-              MetricName: 'Duration',
+              MetricName,
               Dimensions: [
                 {
                   Name: 'FunctionName',

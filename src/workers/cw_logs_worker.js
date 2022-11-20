@@ -5,6 +5,6 @@ exports.handler = async () => {
 
   const cloudwatch_client = new CloudWatchClient();
 
-  const ret = await cloudwatch_client.getMetrics();
+  const ret = await cloudwatch_client.getMetrics('Duration');
   console.log(ret.MetricDataResults[0].Values);
 };
