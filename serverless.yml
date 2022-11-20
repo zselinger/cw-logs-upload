@@ -20,6 +20,7 @@ provider:
 
   environment:
     stage: ${self:custom.stage}
+    BUCKET: ${ssm:/cwlogs/buckets/s3_bucket_arn}
 
   iam:
     role:
@@ -31,6 +32,11 @@ provider:
             - logs:FilterLogEvents
           Resource:
             - 'arn:aws:logs:eu-south-1:745049313685:log-group:/aws/lambda/cw-logs-upload-dev-cwLogsWorker:*'
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+          Resource:
+            - ${ssm:/cwlogs/buckets/s3_bucket_arn}
 
 package:
   patterns:

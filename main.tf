@@ -16,8 +16,8 @@ provider "aws" {
 
 resource "aws_efs_file_system" "efs_for_lambda" {
 
-  performance_mode = var.performance_mode
-  throughput_mode = var.throughput_mode
+  performance_mode                = var.performance_mode
+  throughput_mode                 = var.throughput_mode
   provisioned_throughput_in_mibps = var.provisioned_throughput
 }
 
@@ -44,4 +44,13 @@ resource "aws_efs_access_point" "access_point_lambda" {
     gid = 1000
     uid = 1000
   }
+}
+
+resource "aws_s3_bucket" "metrics-bucket" {
+  bucket = "cw-logs-upload-bucket"
+}
+
+resource "aws_s3_bucket_acl" "private-acl" {
+  bucket = aws_s3_bucket.metrics-bucket.id
+  acl    = "private"
 }
