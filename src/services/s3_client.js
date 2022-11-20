@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 
 class S3 {
   constructor() {
