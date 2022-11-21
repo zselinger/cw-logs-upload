@@ -33,6 +33,13 @@ resource "aws_ssm_parameter" "vpc_subnet_id3" {
   value       = "subnet-fd99b5b7"
 }
 
+resource "aws_ssm_parameter" "s3_bucket_id" {
+  name        = "/cwlogs/buckets/s3_bucket_id"
+  description = "S3 bucket name"
+  type        = "SecureString"
+  value       = aws_s3_bucket.metrics-bucket.id
+}
+
 resource "aws_ssm_parameter" "s3_bucket_arn" {
   name        = "/cwlogs/buckets/s3_bucket_arn"
   description = "S3 bucket name"
