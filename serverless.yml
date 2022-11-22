@@ -48,6 +48,7 @@ package:
 functions:
   cwLogsWorker:
     handler: ./src/workers/cw_logs_worker.handler
+    timeout: 300
     events:
       - schedule: rate(1 day)
     fileSystemConfig:
@@ -60,3 +61,5 @@ functions:
         - ${self:custom.subnet_id1}
         - ${self:custom.subnet_id2}
         - ${self:custom.subnet_id3}
+    layers:
+      - arn:aws:lambda:eu-south-1:745049313685:layer:cwLogsWorkerLayer:1
