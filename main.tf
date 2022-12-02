@@ -145,3 +145,9 @@ resource "null_resource" "configure_nfs" {
     ]
   }
 }
+
+resource "aws_athena_database" "metrics-queries" {
+  name          = "metrics_db"
+  bucket        = aws_s3_bucket.metrics-bucket.bucket
+  force_destroy = true
+}
