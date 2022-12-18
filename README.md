@@ -4,6 +4,8 @@ A simple cloud solution template saving **AWS Lambda** log metrics into an **S3 
 
 The system also automatically provisions **AWS Athena** for S3 object analysis and an **EC2** instance with mounted EFS for varied uses.
 
+![diagram](diagram.png)
+
 ## Methodology
 
 The provisioning of the resources is done using **_Terraform_** (for static resources) and **_Serverless Framework_** (for business logic via Lambda). This is an attempt to use best features of both systems.
